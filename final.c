@@ -2,22 +2,22 @@
 //4/29/202
 
 #include <stdio.h>
-#define maxY 50
-#define maxX 50
+#define maxX 12
+#define maxY 21
 //Prototypes
-void readFile(FILE* fp, int userChoice);
-
-
+void readFile(int userChoice, char fileArray[maxX][maxY]);
+void printFile(char fileArray[maxX][maxY]);
 
 
 int main(){
-	FILE* fp;
+
 	int userChoice;
 	int userEdit; //For edit menu
+	char fileArray[maxX][maxY];
 	
 	printf("Enter your choice: \n");
-	scanf("%d", userChoice);
-	readFile(fp, userChoice);
+	scanf("%d", &userChoice);
+	readFile(userChoice, fileArray);
 
 }
 
@@ -52,7 +52,9 @@ void crop(){
 
 
 //Current Work
-void readFile(FILE* fp,int userChoice){
+void readFile(int userChoice, char fileArray[maxX][maxY]){
+	FILE* fp;
+	
 	if(userChoice == 1){
 	fp = fopen("test_image.txt", "r");
 		if(fp == NULL){
@@ -60,9 +62,31 @@ void readFile(FILE* fp,int userChoice){
 		} 
 		for(int i = 0; i < maxX; i++){
 			for(int j = 0; j < maxY; j++){
-			
+				fscanf(fp, "%c", &fileArray[i][j]);
+				switch(fileArray[i][j]){
+					case '1':
+						fileArray[i][j] = '1';
+						break;
+					case '4':
+						fileArray[i][j] = '4';
+						break;
+					default:
+						fileArray[i][j] = '0';
+						break;	
+				}
 			}
-		{
+		}
 	} 
+	printFile(fileArray);
 	fclose(fp);
 }
+
+void printFile(char fileArray[maxX][maxY]){
+	for(int i = 0; i < maxX; i++){
+		for(int j = 0; j < maxY; j++){
+			printf("%c", fileArray[i][j]);
+		}
+	printf("\n");
+	}
+}
+
