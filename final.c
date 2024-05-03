@@ -32,7 +32,7 @@ int getMenuChoice(){
 		printf("0: Exit\n");
 		printf("\n");
 		printf("Choose from one of the options above: ");
-		scanf(" %d", &userInput);
+		scanf("%d", &userInput);
 		return userInput;
 	}
 	
