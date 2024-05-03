@@ -1,112 +1,212 @@
 //Alysia Carr and Jalen Banks
+
 //4/29/202
 
+
+
 #include <stdio.h>
-#define maxX 12
+
+#define maxX 14
+
 #define maxY 21
+
 //Prototypes
-void readFile(int userChoice, char fileArray[maxX][maxY]);
-void printFile(char fileArray[maxX][maxY]);
-int getMenuChoice();
-int getEditChoice();
+
+void readFile(int userChoice, char fileArray[maxX][maxY], int rows, int columns);
+
+void printFile(char fileArray[maxX][maxY], int rows, int columns);
+
+void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
+
 
 
 int main(){
 
-	int menuChoice, editChoice;
+
+
+	int userChoice;
+
+	int userEdit; //For edit menu
+
 	char fileArray[maxX][maxY];
-	menuChoice = getMenuChoice();
-	editChoice = getEditChoice();
-	printf("Enter your choice: \n");
-	scanf("%d", &userChoice);
-	readFile(userChoice, fileArray);
 
-}
+	int rows = 14;
 
-int getMenuChoice(){
-		int userInput;
-		printf("***ERINSTAGRAM***\n");
-		printf("1: Load image\n");
-		printf("2: Display image\n");
-		printf("3: Edit image\n");
-		printf("0: Exit\n");
-		printf("\n");
-		printf("Choose from one of the options above: ");
-		scanf("%d", &userInput);
-		return userInput;
-	}
+	int columns = 21;
+
 	
-int getEditChoice(){
-	int userEdit;
-	printf("**EDITING**\n");
-	printf("1: Crop image\n");
-	printf("2: Dim image\n");
-	printf("3: Brighten image\n");
-	printf("4: Rotate image\n");
-	printf("0: Exit\n");
+
+	
+
+	printf("Enter your choice: \n");
+
+	scanf("%d", &userChoice);
+
 	printf("\n");
-	printf("Choose from one of the options above: ");
-	scanf("%d", &userEdit);
-	return userEdit;
+
+	
+
+	readFile(userChoice, fileArray, rows, columns);
+
+	rowColumnCount(fileArray, rows, columns);
+
+
+
 }
+
+
+
+void getMenuChoice(){
+
+
+
+}
+
+
+
+
+
+void editMenuChoice(){
+
+
+
+}
+
+
+
 
 
 void saveImage(){
 
+
+
 }
+
+
+
 
 
 void editFunction(){
 
+
+
 }
+
+
+
 
 
 void dimBrighten(){
 
+
+
 }
+
+
+
 
 
 void crop(){
 
+
+
 }
+
+
+
 
 
 //Current Work
-void readFile(int userChoice, char fileArray[maxX][maxY]){
+
+void readFile(int userChoice, char fileArray[maxX][maxY], int rows, int columns){
+
 	FILE* fp;
+
 	
+
 	if(userChoice == 1){
+
 	fp = fopen("test_image.txt", "r");
+
 		if(fp == NULL){
+
 			printf("Image could not be opened \n");
+
 		} 
-		for(int i = 0; i < maxX; i++){
-			for(int j = 0; j < maxY; j++){
+
+		for(int i = 0; i < rows; i++){
+
+			for(int j = 0; j < columns; j++){
+
 				fscanf(fp, "%c", &fileArray[i][j]);
-				switch(fileArray[i][j]){
-					case '1':
-						fileArray[i][j] = '1';
-						break;
-					case '4':
-						fileArray[i][j] = '4';
-						break;
-					default:
-						fileArray[i][j] = '0';
-						break;	
-				}
+
 			}
+
 		}
-	} 
-	printFile(fileArray);
+
+	}
+
+	printFile(fileArray, rows, columns);
+
+	rowColumnCount(fileArray, rows, columns); 
+
 	fclose(fp);
+
 }
 
-void printFile(char fileArray[maxX][maxY]){
-	for(int i = 0; i < maxX; i++){
-		for(int j = 0; j < maxY; j++){
+
+
+void printFile(char fileArray[maxX][maxY], int rows, int columns){
+
+	for(int i = 0; i < rows; i++){
+
+		for(int j = 0; j < columns; j++){
+
 			printf("%c", fileArray[i][j]);
+
 		}
-	printf("\n");
+
 	}
+
 }
+
+
+
+void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns){
+
+	//iterate over each spot in the picture
+
+	//for each value in the x direction we want to column++
+
+	//for each spot in the y direction we want to row++
+
+	int row_count = 0;
+
+	int column_count = 0;
+
+	for(int i = 0; i < rows; i++){
+
+			for(int j = 0; j < columns; j++){
+
+				if(fileArray[i][j] == '\n'){
+
+					row_count++;
+
+				}
+
+			}
+
+			column_count = columns;
+
+		}
+
+	printf("\n");
+
+	printf("Row count: %d", row_count);
+
+	printf("Column count: %d", column_count);
+
+}
+
+
 
