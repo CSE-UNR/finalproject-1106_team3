@@ -7,27 +7,47 @@
 //Prototypes
 void readFile(int userChoice, char fileArray[maxX][maxY]);
 void printFile(char fileArray[maxX][maxY]);
+int getMenuChoice();
+int getEditChoice();
 
 
 int main(){
 
-	int userChoice;
-	int userEdit; //For edit menu
+	int menuChoice, editChoice;
 	char fileArray[maxX][maxY];
-	
+	menuChoice = getMenuChoice();
+	editChoice = getEditChoice();
 	printf("Enter your choice: \n");
 	scanf("%d", &userChoice);
 	readFile(userChoice, fileArray);
 
 }
 
-void getMenuChoice(){
-
-}
-
-
-void editMenuChoice(){
-
+int getMenuChoice(){
+		int userInput;
+		printf("***ERINSTAGRAM***\n");
+		printf("1: Load image\n");
+		printf("2: Display image\n");
+		printf("3: Edit image\n");
+		printf("0: Exit\n");
+		printf("\n");
+		printf("Choose from one of the options above: ");
+		scanf(" %d", &userInput);
+		return userInput;
+	}
+	
+int getEditChoice(){
+	int userEdit;
+	printf("**EDITING**\n");
+	printf("1: Crop image\n");
+	printf("2: Dim image\n");
+	printf("3: Brighten image\n");
+	printf("4: Rotate image\n");
+	printf("0: Exit\n");
+	printf("\n");
+	printf("Choose from one of the options above: ");
+	scanf("%d", &userEdit);
+	return userEdit;
 }
 
 
