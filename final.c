@@ -26,7 +26,7 @@ int main(){
 
 	int menu, edit;
 	menu = getMenuChoice();
-	edit = getEditChocie();
+	edit = getEditChoice();
 
 	char fileArray[maxX][maxY];
 
