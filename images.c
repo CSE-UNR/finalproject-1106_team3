@@ -87,9 +87,24 @@ int getEditChoice(){
 
 
 
-void saveImage(){
-
-
+void saveImage(int *fp){
+	char fileName[STRING+1];
+	printf("What do you want to name the image file? (inlcude the extension): ");
+	scanf("%s", fileName);
+	FILE *userFile = fopen(fileName, "r");
+	if (fp == NULL){
+		printf("Can't open file");
+	}
+	//else{
+	//fgets(..., ..., fp);
+	
+		//for(int ){
+		//}
+			//for(int ){
+			//}
+		
+	//fclose(fp);
+	//}
 
 }
 
