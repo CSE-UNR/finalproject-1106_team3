@@ -7,8 +7,8 @@
 #include <stdio.h>
 
 #define maxX 50  //500
-
 #define maxY 50 //500
+#define STRING 50
 
 //Prototypes
 
@@ -91,12 +91,12 @@ void saveImage(int *fp){
 	char fileName[STRING+1];
 	printf("What do you want to name the image file? (inlcude the extension): ");
 	scanf("%s", fileName);
-	FILE *userFile = fopen(fileName, "r");
+	FILE *userFile = fopen(fileName, "w");
 	if (fp == NULL){
 		printf("Can't open file");
-	}
+	//}
 	//else{
-	//fgets(..., ..., fp);
+	//fgets(fileName, , fp);
 	
 		//for(int ){
 		//}
