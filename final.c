@@ -17,16 +17,16 @@ void readFile(int userChoice, char fileArray[maxX][maxY], int rows, int columns)
 void printFile(char fileArray[maxX][maxY], int rows, int columns);
 
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
-
+int getMenuChoice();
+int getEditChoice();
 
 
 int main(){
 
 
-
-	int userChoice;
-
-	int userEdit; //For edit menu
+	int menu, edit;
+	menu = getMenuChoice();
+	edit = getEditChocie();
 
 	char fileArray[maxX][maxY];
 
@@ -56,20 +56,32 @@ int main(){
 
 
 
-void getMenuChoice(){
-
-
-
+int getMenuChoice(){
+	int userMenu;
+	printf("***ERINSTAGRAM***\n");
+	printf("1: Load image\n");
+	printf("2: Display image\n");
+	printf("3: Edit image\n");
+	printf("0: Exit\n");
+	printf("\n");
+	printf("Choose from one of the options above: ");
+	scanf("%d", &userMenu);
+	return userMenu;
 }
 
 
 
-
-
-void editMenuChoice(){
-
-
-
+int getEditChoice(){
+	int userEdit;
+	printf("**EDITING**\n");
+	printf("1: Crop image\n");
+	printf("2: Dim image\n");
+	printf("3: Brighten image\n");
+	printf("0: Exit\n");
+	printf("\n");
+	printf("Choose from one of the options above: ");
+	scanf("%d", &userEdit);
+	return userEdit;
 }
 
 
