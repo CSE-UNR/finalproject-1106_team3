@@ -17,19 +17,22 @@ void printFile(char fileArray[maxX][maxY], int rows, int columns);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
-
+void dimImage();
+void brightenImage();
+void saveImage(int *fp){
 
 int main(){
 
 
-	int menuChoice, userEdit;
+	int menuChoice, editChoice;
 
 	char fileArray[maxX][maxY];
 	char fileName[maxY];
 
 
 	menuChoice = getMenuChoice();
-
+	editChoice = getEditChoice();
+	
 	switch(menuChoice){
 		case 1:
 			printf("Enter the name of your file: ");
@@ -39,7 +42,20 @@ int main(){
 			loadFile(fileArray, fileName);
 			break;
 		case 3:
-			getEditChoice();
+			switch(editChoice){
+				case 1:
+					//cropImage
+					break;
+				case 2:
+					//dimImage
+				
+					break;
+				case 3:
+					//brightenImage
+					break;
+				case 0:
+					//exit
+					break;
 		case 0:
 			printf("Goodbye. \n");
 			break;
@@ -57,7 +73,7 @@ int main(){
 
 
 int getMenuChoice(){
-	int menuChoice;
+	int userMenu;
 	printf("***ERINSTAGRAM***\n");
 	printf("1: Load image\n");
 	printf("2: Display image\n");
@@ -65,8 +81,8 @@ int getMenuChoice(){
 	printf("0: Exit\n");
 	printf("\n");
 	printf("Choose from one of the options above: ");
-	scanf("%d", &menuChoice);
-	return menuChoice;
+	scanf("%d", &userMenu);
+	return userMenu;
 }
 
 
@@ -112,17 +128,7 @@ void saveImage(int *fp){
 
 
 
-void editFunction(){
-
-
-
-}
-
-
-
-
-
-void dimPicture(){
+void dimImage(){
 //take each value in the array decrement them by 1
 //assign new values to each of the spaces in the picture
 
@@ -130,7 +136,7 @@ void dimPicture(){
 }
 
 
-void brightenPicture(){
+void brightenImage(){
 //take each value and increment them by 1
 //assign respective values to each of the spaces in the picture
 
