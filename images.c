@@ -12,8 +12,8 @@
 
 //Prototypes
 
-void loadFile(char fileArray[maxX][maxY], char fileName[maxY]);
-void printFile(char fileArray[maxX][maxY], int rows, int columns);
+void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp);
+void printFile(char fileArray[maxX][maxY], int rows, int columns, FILE* fp);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
@@ -31,19 +31,21 @@ int main(){
 	char fileName[maxY];
 	char saveChoice;
 
-	//do{
+	do{
 		menuChoice = getMenuChoice();
-		editChoice = getEditChoice();
+		
 	
 		switch(menuChoice){
 			case 1:
-				printf("Enter the name of your file: ");
+				//printFile(
+				//printf("Enter the name of your file: ");
 				//Read file name
 				break;
 			case 2:
-				loadFile(fileArray, fileName);
+				//loadFile(fileArray, fileName);
 				break;
 			case 3:
+				editChoice = getEditChoice();
 				switch(editChoice){
 					case 1:
 					
@@ -58,16 +60,14 @@ int main(){
 						//exit
 						break;
 					}
-				case 0:
-			printf("Goodbye. \n");
-				break;
 		}
 
 
 
 		//rowColumnCount(fileArray, rows, columns);
-	// } while(menuChoice != 0);
-	//printf("Goodbye!");
+	} while(menuChoice != 0);
+	printf("Goodbye!");
+	printf("\n");
 
 	return 0;
 }
@@ -133,23 +133,49 @@ void saveImage(int *fp){
 
 
 
-void dimImage(){
-	
-//take each value in the array decrement them by 1
-//assign new values to each of the spaces in the picture
+void dimImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int dim){
+	for(int i = 0; i < row; i++){
+		for(int j = 0; j < column; j++){	
+			switch(dim){
+				case 0:
+					fprintf(fp, " ");
+					break;
+				case 1:
+					fprintf(fp, ".");
+					break;
+				case 2:
+					fprintf(fp, "o");
+					break;
+				case 3:
+					fprintf(fp, "O");
+					break;
+				}
+			}
+		}
+}	
 
-	
+
+
+void brightenImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int brightness){
+	for(int i = 0; i < row; i++){
+		for(int j = 0; j < column; j++){	
+			switch(brightness){
+				case 0:
+					fprintf(fp, ".");
+					break;
+				case 1:
+					fprintf(fp, "o");
+					break;
+				case 2:
+					fprintf(fp, "O");
+					break;
+				case 3:
+					fprintf(fp, "0");
+					break;
+				}
+			}
+		}
 }
-
-
-void brightenImage(){
-	
-//take each value and increment them by 1
-//assign respective values to each of the spaces in the picture
-
-}
-
-
 
 
 void cropImage(){
@@ -164,9 +190,7 @@ void cropImage(){
 
 //Current Work
 
-void loadFile(char fileArray[maxX][maxY], char fileName[maxY]){
-
-	FILE* fp;
+void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp){
 	
 	fp = fopen("test_image.txt", "r");
 		if(fp == NULL){
@@ -208,28 +232,33 @@ void loadFile(char fileArray[maxX][maxY], char fileName[maxY]){
 
 
 
-void printFile(char fileArray[maxX][maxY], int rows, int columns){
+void printFile(char fileArray[maxX][maxY], int rows, int columns, FILE* fp){
 
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){
-			// switch(fileArray[i][j]){
-			// 	case '1':
-			// 		fileArray[i][j] == '.';
-			// 		break;
-			// 	case '2':
-			// 		fileArray[i][j] == 'o';
-			// 		break;
-			// 	case '3':
-			// 		fileArray[i][j] == 'O';
-			// 		break;
-			// 	case '4':
-			// 		fileArray[i][j] == '0';
-			// 		break;
-			// 	default:
-			// 		fileArray[i][j] == ' ';
-			// 		break;
-			// }
-			printf("%c", fileArray[i][j]);
+			if(fp == stdout){
+			 switch(fileArray[i][j]){
+			 	case '1':
+			 		fileArray[i][j] == '.';
+			 		break;
+			 	case '2':
+			 		fileArray[i][j] == 'o';
+			 		break;
+			 	case '3':
+			 		fileArray[i][j] == 'O';
+			 		break;
+			 	case '4':
+			 		fileArray[i][j] == '0';
+			 		break;
+			 	default:
+			 		fileArray[i][j] == ' ';
+			 		break;
+			 }
+				fprintf(fp, "%c", fileArray[i][j]);
+			}
+			else{
+				fprintf(fp, "%d", fileArray[i][j]);
+			}
 		}
 	}
 }
