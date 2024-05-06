@@ -17,9 +17,9 @@ void printFile(char fileArray[maxX][maxY], int rows, int columns);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
-int cropImage();
-int dimImage();
-int brightenImage();
+void cropImage();
+void dimImage();
+void brightenImage();
 void saveImage(int *fp);
 
 int main(){
@@ -31,48 +31,43 @@ int main(){
 	char fileName[maxY];
 	char saveChoice;
 
-
-	menuChoice = getMenuChoice();
-	editChoice = getEditChoice();
+	//do{
+		menuChoice = getMenuChoice();
+		editChoice = getEditChoice();
 	
-	switch(menuChoice){
-		case 1:
-			printf("Enter the name of your file: ");
-			//Read file name
-			break;
-		case 2:
-			loadFile(fileArray, fileName);
-			break;
-		case 3:
-			switch(editChoice){
-				case 1:
-					saveChoice = cropImage();
-					if(saveChoice == 'y'){
+		switch(menuChoice){
+			case 1:
+				printf("Enter the name of your file: ");
+				//Read file name
+				break;
+			case 2:
+				loadFile(fileArray, fileName);
+				break;
+			case 3:
+				switch(editChoice){
+					case 1:
+					
+						break;
+					case 2:
+					
+						break;
+					case 3:
+				
+						break;
+					case 0:
+						//exit
+						break;
 					}
-					break;
-				case 2:
-					saveChoice = dimImage();
-					if(saveChoice == 'y'){
-					}
-					break;
-				case 3:
-					saveChoice = brightenImage();
-					if(saveChoice == 'y'){
-					}
-					break;
 				case 0:
-					//exit
-					break;
-				}
-		case 0:
 			printf("Goodbye. \n");
-			break;
-	}
+				break;
+		}
 
 
 
-	//rowColumnCount(fileArray, rows, columns);
-
+		//rowColumnCount(fileArray, rows, columns);
+	// } while(menuChoice != 0);
+	//printf("Goodbye!");
 
 	return 0;
 }
@@ -111,62 +106,56 @@ int getEditChoice(){
 
 
 void saveImage(int *fp){
-	char fileName[STRING+1];
-	printf("What do you want to name the image file? (inlcude the extension): ");
-	scanf("%s", fileName);
-	FILE *userFile = fopen(fileName, "w");
-	if (fp == NULL){
-		printf("Can't open file");
-	}
-	else{
-	//fgets(fileName, , fp);
+	char fileName[STRING+1], saveChoice;
+	printf("Would you like to save image? (y/n): ");
+	scanf(" %c",&saveChoice);
+	if(saveChoice == 'y' || saveChoice == 'Y'){ 
+		printf("What do you want to name the image file? (inlcude the extension): ");
+		scanf("%s", fileName);
+		FILE *userFile = fopen(fileName, "w");
+		if (fp == NULL){
+			printf("Can't open file");
+		}
+		else{
+			//fgets(fileName, , fp);
 	
-		//for(int ){
-		//}
+			//for(int ){
+			//}
 			//for(int ){
 			//}
 		
-	//fclose(fileName);
+		//fclose(fileName);
+		}
 	}
-
 }
 
 
 
 
 
-int dimImage(){
-	char dimyn;
+void dimImage(){
+	
 //take each value in the array decrement them by 1
 //assign new values to each of the spaces in the picture
 
-	printf("Would you like to save image? (y/n): ");
-	scanf(" %c", &dimyn);
-	return dimyn;
+	
 }
 
 
-int brightenImage(){
-	char brightyn;
+void brightenImage(){
+	
 //take each value and increment them by 1
 //assign respective values to each of the spaces in the picture
 
-printf("Would you like to save image? (y/n): ");
-	scanf(" %c", &brightyn);
-	return brightyn;
 }
 
 
 
 
-int cropImage(){
-	char cropyn;
+void cropImage(){
+	
 	//code
 
-
-printf("Would you like to save image? (y/n): ");
-	scanf(" %c", &cropyn);
-	return cropyn;
 }
 
 
