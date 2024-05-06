@@ -17,10 +17,10 @@ void printFile(char fileArray[maxX][maxY], int rows, int columns);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
-void cropImage();
-void dimImage();
-void brightenImage();
-void saveImage(int *fp){
+int cropImage();
+int dimImage();
+int brightenImage();
+void saveImage(int *fp);
 
 int main(){
 
@@ -29,6 +29,7 @@ int main(){
 
 	char fileArray[maxX][maxY];
 	char fileName[maxY];
+	char saveChoice;
 
 
 	menuChoice = getMenuChoice();
@@ -45,18 +46,24 @@ int main(){
 		case 3:
 			switch(editChoice){
 				case 1:
-					//cropImage
+					saveChoice = cropImage();
+					if(saveChoice == 'y'){
+					}
 					break;
 				case 2:
-					//dimImage
-				
+					saveChoice = dimImage();
+					if(saveChoice == 'y'){
+					}
 					break;
 				case 3:
-					//brightenImage
+					saveChoice = brightenImage();
+					if(saveChoice == 'y'){
+					}
 					break;
 				case 0:
 					//exit
 					break;
+				}
 		case 0:
 			printf("Goodbye. \n");
 			break;
@@ -110,8 +117,8 @@ void saveImage(int *fp){
 	FILE *userFile = fopen(fileName, "w");
 	if (fp == NULL){
 		printf("Can't open file");
-	//}
-	//else{
+	}
+	else{
 	//fgets(fileName, , fp);
 	
 		//for(int ){
@@ -119,8 +126,8 @@ void saveImage(int *fp){
 			//for(int ){
 			//}
 		
-	//fclose(fp);
-	//}
+	//fclose(fileName);
+	}
 
 }
 
@@ -128,29 +135,38 @@ void saveImage(int *fp){
 
 
 
-void dimImage(){
+int dimImage(){
+	char dimyn;
 //take each value in the array decrement them by 1
 //assign new values to each of the spaces in the picture
 
-
+	printf("Would you like to save image? (y/n): ");
+	scanf(" %c", &dimyn);
+	return dimyn;
 }
 
 
-void brightenImage(){
+int brightenImage(){
+	char brightyn;
 //take each value and increment them by 1
 //assign respective values to each of the spaces in the picture
 
-
+printf("Would you like to save image? (y/n): ");
+	scanf(" %c", &brightyn);
+	return brightyn;
 }
 
 
 
 
+int cropImage(){
+	char cropyn;
+	//code
 
-void cropImage(){
 
-
-
+printf("Would you like to save image? (y/n): ");
+	scanf(" %c", &cropyn);
+	return cropyn;
 }
 
 
