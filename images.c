@@ -17,6 +17,7 @@ void printFile(char fileArray[maxX][maxY], int rows, int columns);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
+void cropImage();
 void dimImage();
 void brightenImage();
 void saveImage(int *fp){
@@ -61,7 +62,6 @@ int main(){
 			break;
 	}
 
-	//userEdit = getEditChoice();
 
 
 	//rowColumnCount(fileArray, rows, columns);
@@ -147,7 +147,7 @@ void brightenImage(){
 
 
 
-void crop(){
+void cropImage(){
 
 
 
