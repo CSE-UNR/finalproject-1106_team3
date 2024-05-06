@@ -18,9 +18,9 @@ void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
 void cropImage();
-void dimImage();
-void brightenImage();
-void saveImage(int *fp);
+void dimImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int dim);
+void brightenImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int bright);
+void saveImage(FILE *fp);
 
 int main(){
 
@@ -105,14 +105,20 @@ int getEditChoice(){
 
 
 
-void saveImage(int *fp){
+void saveImage(FILE *fp){
 	char fileName[STRING+1], saveChoice;
 	printf("Would you like to save image? (y/n): ");
 	scanf(" %c",&saveChoice);
 	if(saveChoice == 'y' || saveChoice == 'Y'){ 
 		printf("What do you want to name the image file? (inlcude the extension): ");
-		scanf("%s", fileName);
-		FILE *userFile = fopen(fileName, "w");
+		//scanf("%s", fileName);
+		fgets(fileName, STRING, stdin);
+		for (int i = 0; fileName[i] != '\0'; i++){
+			if(fileName[i] == '\n'){
+				fileName[i] = '\0';
+			}
+		}
+		fp = fopen(fileName, "w");
 		if (fp == NULL){
 			printf("Can't open file");
 		}
