@@ -80,6 +80,10 @@ int main(){
 	return 0;
 }
 
+void cropImage( int numbers, int size, int array[]);{
+	
+}
+
 void printImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
 	printf("\n");
 	for(int i=0; i< numLines; i++){
