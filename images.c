@@ -17,19 +17,19 @@ void printFile(char fileArray[maxX][maxY], int rows, int columns, FILE* fp);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
-void cropImage();
-void dimImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int dim);
-void brightenImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int bright);
+void cropImage( int numbers, int size, int array[]);
+void dimImage(int row, int column, int fileArray[][column], FILE* fp);
+void brightenImage(int row, int column, int fileArray[][column], FILE* fp);
 void saveImage(FILE *fp);
 
 int main(){
 
     FILE* fp;
-    int menuChoice, editChoice;
+    int menuChoice, editChoice, row, column;
 
     char fileArray[maxX][maxY];
     char fileName[maxY];
-    char saveChoice;
+   
 
     do{
    	 menuChoice = getMenuChoice();
@@ -48,10 +48,11 @@ int main(){
    			 editChoice = getEditChoice();
    			 switch(editChoice){
    				 case 1:
-   				 
+   				 	cropImage( int numbers, int size, int array[]);
    					 break;
    				 case 2:
-   				 
+   				 	dimImage(row, column, fileArray, fp);
+   				 	saveImage(fp);
    					 break;
    				 case 3:
    			 
@@ -80,7 +81,7 @@ int getMenuChoice(){
     printf("1: Load image\n");
     printf("2: Display image\n");
     printf("3: Edit image\n");
-    printf("0: Exit\n");
+    printf("0: Return to main menu\n");
     printf("\n");
     printf("Choose from one of the options above: ");
     scanf("%d", &userMenu);
@@ -111,8 +112,8 @@ void saveImage(FILE *fp){
     scanf(" %c",&saveChoice);
     if(saveChoice == 'y' || saveChoice == 'Y'){
    	 printf("What do you want to name the image file? (inlcude the extension): ");
-   	 //scanf("%s", fileName);
-   	 fgets(fileName, STRING, stdin);
+   	 scanf("%s", fileName);
+   	 //fgets(fileName, STRING, stdin);
    	 for (int i = 0; fileName[i] != '\0'; i++){
    		 if(fileName[i] == '\n'){
    			 fileName[i] = '\0';
@@ -120,7 +121,7 @@ void saveImage(FILE *fp){
    	 }
    	 fp = fopen(fileName, "w");
    	 if (fp == NULL){
-   		 printf("Can't open file");
+   		 printf("Can't open file\n");
    	 }
    	 else{
    		 //fgets(fileName, , fp);
@@ -139,7 +140,8 @@ void saveImage(FILE *fp){
 
 
 
-void dimImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int dim){
+void dimImage(int row, int column, int fileArray[][column], FILE* fp){
+	int dim;
     for(int i = 0; i < row; i++){
    	 for(int j = 0; j < column; j++){    
    		 switch(dim){
@@ -162,10 +164,11 @@ void dimImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int dim)
 
 
 
-void brightenImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int brightness){
+void brightenImage(int row, int column, int fileArray[][column], FILE* fp){
+	int bright;
     for(int i = 0; i < row; i++){
    	 for(int j = 0; j < column; j++){    
-   		 switch(brightness){
+   		 switch(bright){
    			 case 0:
    				 fprintf(fp, ".");
    				 break;
@@ -184,11 +187,25 @@ void brightenImage(int row, int column, int fileArray[maxX][maxY], FILE* fp, int
 }
 
 
-void cropImage(){
-    
-    //code
-
+void cropImage( int numbers, int size, int array[]){
+    int tempCount = 0;
+    printf("The image you want to crop is # x #\n");
+    printf("The row and column values start in the upper lefthand corner.\n");
+    printf("Which column do you want to be the new left side? ");
+    while(tempCount < size){
+    	scanf("%d", array[tempCount]);
+    	if(array[tempCount] <= 0 && array[tempCount] >= 50){
+    		tempCount++;
+    	}
+    	else{
+    		printf("Invalid column value. Chose a value between 1 and 50: ");
+    		scanf("%d", &array[tempCount]);
+    	}
+    }
 }
+    
+
+
 
 
 
