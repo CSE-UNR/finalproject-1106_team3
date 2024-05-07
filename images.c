@@ -8,15 +8,17 @@
 
 #define maxX 50  //500
 #define maxY 50 //500
+#define MAX_NUM_LINES 500
+#define MAX_LINE_LENGTH 500
 #define MAX_FILE_NAME_LENGTH 50
 //I think we should change this name
 //Hard to differentiate from an actual string, same as string data type, like our file name dec.
 #define STRING 50
 
 //Prototypes
-
-void loadFile(char fileArray[maxX][maxY], int *row_count);
-void printFile(char fileArray[maxX][maxY], int rows, int columns, FILE* fp);
+int strLen(char str[MAX_LINE_LENGTH]);
+int loadFile(char fileArray[MAX_NUM_LINES][MAX_LINE_LENGTH]);
+//void printFile(char fileArray[maxX][maxY], int rows, int columns, FILE* fp);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
 int getEditChoice();
@@ -26,51 +28,51 @@ void brightenImage(int row, int column, int fileArray[][column], FILE* fp);
 void saveImage(FILE *fp);
 
 int main(){
+	int menuChoice, editChoice, row, column, rowResult;
 
-    int menuChoice, editChoice, row, column, rowResult;
+	char fileArray[MAX_NUM_LINES][MAX_LINE_LENGTH];
 
-    char fileArray[maxX][maxY];
+	int numLines;
+	int lineLength;
 
-    do{
-   	 menuChoice = getMenuChoice();
-   	 
-    
-   	 switch(menuChoice){
-   		 case 1:
-   			 //printFile(
-   			 //printf("Enter the name of your file: ");
-   			 //Read file name
-   			 break;
-   		 case 2:
-   			 loadFile(fileArray, &rowResult);
-   			 break;
-   		 case 3:
-   			 editChoice = getEditChoice();
-   			 switch(editChoice){
-   				 case 1:
-   				 	//cropImage( int numbers, int size, int array[]);
-   					 break;
-   				 case 2:
-   				 	//dimImage(row, column, fileArray, fp);
-   				 	//saveImage(fp);
-   					 break;
-   				 case 3:
-   			 
-   					 break;
-   				 case 0:
-   					 //exit
-   					 break;
-   				 }
-   	 }
+	do{
+		menuChoice = getMenuChoice();
 
+		switch(menuChoice){
+			case 1:
+				numLines = loadFile(fileArray);
+				lineLength = strLen(fileArray[1]);
+				printf("lineLength: %d", lineLength);
+				break;
+			case 2:
+				break;
+			case 3:
+				editChoice = getEditChoice();
 
+				switch(editChoice){
+					case 1:
+					//cropImage( int numbers, int size, int array[]);
+						break;
+					case 2:
+					//dimImage(row, column, fileArray, fp);
+					//saveImage(fp);
+						break;
+					case 3:
+				
+						break;
+					case 0:
+						//exit
+						break;
+				}
+		}
 
-   	 //rowColumnCount(fileArray, rows, columns);
-    } while(menuChoice != 0);
-    printf("Goodbye!");
-    printf("\n");
+		//rowColumnCount(fileArray, rows, columns);
+	} while(menuChoice != 0);
 
-    return 0;
+	printf("Goodbye!");
+	printf("\n");
+
+	return 0;
 }
 
 
@@ -213,105 +215,103 @@ void saveImage(FILE *fp){
 
 //Current Work
 
-void loadFile(char fileArray[maxX][maxY], int *row_count){
+int loadFile(char fileArray[MAX_NUM_LINES][MAX_LINE_LENGTH]){
     
-    int row = 0;
-    int column = 0;
 	char fileName[MAX_FILE_NAME_LENGTH];
 
     FILE* fp;
 	
 	printf("What is the name of the image file? ");
-	scanf("%s", fileName);
 
-	//printf("%s \n", fileName);
+	scanf("%s", fileName);
 
     fp = fopen(fileName, "r");
 
    	if(fp == NULL){
    		 printf("Could not find an image with that file name. \n");
-		return;
+		return -1;
    	}
 
-	// int i = 0;
+	int i = 0;
 
-	// while(fgets(fileArray[i], maxY, fp) != NULL){
-	// 	printf("%s", fileArray[i]);
-	// 	i++;
-	// 	row++;
-	// }
-	
-	// fclose(fp);
+	while(fgets(fileArray[i], MAX_LINE_LENGTH, fp) != NULL){
+		//printf("%s", fileArray[i]);//TODO: Delete
+		i++;
+	}
 
-	// for ( i = 0; i < row; i++){
-	// 	for(int j =0; j < maxY; j++){
-	
-   	// 		switch(fileArray[i][j]){
-   	//      		case '1':
-   	//      			fileArray[i][j] = '.';
-   	//      			break;
-   	//      		case '2':
-   	//      			fileArray[i][j] = 'o';
-   	//      			break;
-   	//      		case '3':
-   	//      			fileArray[i][j] = 'O';
-   	// 				break;
-   	// 			case '4':
-   	// 				fileArray[i][j] = '0';
-   	//      			break;
-   	// 			default:
-   	//      			fileArray[i][j] = ' ';
-   	//      			break;
-   	// 		}  
-	// 	}
-	// }
+	fclose(fp);
 
-	// printf("\n");
-   	// printf("Rows: %d \n", row);
-   	// printf("Columns: %d", column);
+	printf("Image successfully loaded!\n");
 
-	// *row_count = row;
-
-   	//  for(int i = 0; i < row; i++){
-   	// 	 for(int j = 0; j < maxY; j++){
-   	//      	 printf("%c", fileArray[i][j]);
-   	//       }
-   	//   }
-	// printf("\n");
+	return i;
 }
 
 
 //Figure out later
-void printFile(char fileArray[maxX][maxY], int rows, int columns, FILE* fp){
+// void printFile(char fileArray[maxX][maxY], int rows, int columns){
 
-    for(int i = 0; i < rows; i++){
-   	 for(int j = 0; j < columns; j++){
-   		 if(fp == stdout){
-   		  switch(fileArray[i][j]){
-   		      case '1':
-   		     	 fileArray[i][j] == '.';
-   		     	 break;
-   		      case '2':
-   		     	 fileArray[i][j] == 'o';
-   		     	 break;
-   		      case '3':
-   		     	 fileArray[i][j] == 'O';
-   		     	 break;
-   		      case '4':
-   		     	 fileArray[i][j] == '0';
-   		     	 break;
-   		      default:
-   		     	 fileArray[i][j] == ' ';
-   		     	 break;
-   		  }
-   			 fprintf(fp, "%c", fileArray[i][j]);
-   		 }
-   		 else{
-   			 fprintf(fp, "%d", fileArray[i][j]);
-   		 }
-   	 }
-    }
-}
+//     for(int i = 0; i < rows; i++){
+//    	 for(int j = 0; j < columns; j++){
+//    		 if(fp == stdout){
+//    		  switch(fileArray[i][j]){
+//    		      case '1':
+//    		     	 fileArray[i][j] == '.';
+//    		     	 break;
+//    		      case '2':
+//    		     	 fileArray[i][j] == 'o';
+//    		     	 break;
+//    		      case '3':
+//    		     	 fileArray[i][j] == 'O';
+//    		     	 break;
+//    		      case '4':
+//    		     	 fileArray[i][j] == '0';
+//    		     	 break;
+//    		      default:
+//    		     	 fileArray[i][j] == ' ';
+//    		     	 break;
+//    		  }
+//    			 fprintf(fp, "%c", fileArray[i][j]);
+//    		 }
+//    		 else{
+//    			 fprintf(fp, "%d", fileArray[i][j]);
+//    		 }
+//    	 }
+//     }
+// 	// for ( i = 0; i < row; i++){
+// 	// 	for(int j =0; j < maxY; j++){
+	
+//    	// 		switch(fileArray[i][j]){
+//    	//      		case '1':
+//    	//      			fileArray[i][j] = '.';
+//    	//      			break;
+//    	//      		case '2':
+//    	//      			fileArray[i][j] = 'o';
+//    	//      			break;
+//    	//      		case '3':
+//    	//      			fileArray[i][j] = 'O';
+//    	// 				break;
+//    	// 			case '4':
+//    	// 				fileArray[i][j] = '0';
+//    	//      			break;
+//    	// 			default:
+//    	//      			fileArray[i][j] = ' ';
+//    	//      			break;
+//    	// 		}  
+// 	// 	}
+// 	// }
+
+// 	// printf("\n");
+//    	// printf("Rows: %d \n", row);
+//    	// printf("Columns: %d", column);
+
+// 	// *row_count = row;
+// 	//  for(int i = 0; i < row; i++){
+//    	// 	 for(int j = 0; j < maxY; j++){
+//    	//      	 printf("%c", fileArray[i][j]);
+//    	//       }
+//    	//   }
+// 	// printf("\n");
+// }
 
 
 
@@ -338,4 +338,26 @@ void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns){
     printf("Row count: %d", row_count + 1);
     printf("Column count: %d", column_count);
 
+}
+
+
+void cpyStr(char source[], char destination[]){
+	int i=0;
+	while(source[i] != '\0'){
+		destination[i] = source[i];
+		i++;
+	}
+
+	destination[i] = '\0';
+}
+
+int strLen(char str[]){
+	printf("%s", str);
+	int i = 0;
+
+	while(str[i] != '\0'){
+		i++;
+	}
+
+	return i;
 }
