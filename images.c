@@ -48,11 +48,11 @@ int main(){
    			 editChoice = getEditChoice();
    			 switch(editChoice){
    				 case 1:
-   				 	cropImage( int numbers, int size, int array[]);
+   				 	//cropImage( int numbers, int size, int array[]);
    					 break;
    				 case 2:
-   				 	dimImage(row, column, fileArray, fp);
-   				 	saveImage(fp);
+   				 	//dimImage(row, column, fileArray, fp);
+   				 	//saveImage(fp);
    					 break;
    				 case 3:
    			 
