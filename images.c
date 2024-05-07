@@ -218,53 +218,54 @@ void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp){
     int row = 0;
     int column = 0;
     
-    fp = fopen("test_image.txt", "r");
+    fp = fopen(fileName, "r");
    	 if(fp == NULL){
    		 printf("Image could not be opened. \n");
    	}
 
 	int i = 0;
-	int j = 0;
-	while(fgets(fileArray[i], maxX, fp) != NULL){
+
+	while(fgets(fileArray[i], maxY, fp) != NULL){
 		printf("%s", fileArray[i]);
 		i++;
 		row++;
-	// while(fgets(fileArray[j], maxY, fp) != "\n"){
-	// 	j++;
-	// 	column++;
-	// }
-   		switch(fileArray[i][j]){
-   	     	case '1':
-   	     		fileArray[i][j] = '.';
-   	     		break;
-   	     	case '2':
-   	     		fileArray[i][j] = 'o';
-   	     		break;
-   	     	case '3':
-   	     		fileArray[i][j] = 'O';
-   				break;
-   			case '4':
-   				fileArray[i][j] = '0';
-   	     		break;
-   			default:
-   	     		fileArray[i][j] = ' ';
-   	     		break;
-   		}  
 	}
-		if(fileArray[i] == "1"){
-			fileArray[i] == ".";
-		}   		 	 
+	
+	fclose(fp);
+
+	for ( i = 0; i < row; i++){
+		for(int j =0; j < maxY; j++){
+	
+   			switch(fileArray[i][j]){
+   	     		case '1':
+   	     			fileArray[i][j] = '.';
+   	     			break;
+   	     		case '2':
+   	     			fileArray[i][j] = 'o';
+   	     			break;
+   	     		case '3':
+   	     			fileArray[i][j] = 'O';
+   					break;
+   				case '4':
+   					fileArray[i][j] = '0';
+   	     			break;
+   				default:
+   	     			fileArray[i][j] = ' ';
+   	     			break;
+   			}  
+		}
+	}
+
 	printf("\n");
    	printf("Rows: %d \n", row);
    	printf("Columns: %d", column);
 
    	 for(int i = 0; i < row; i++){
-   		 for(int j = 0; j < column; j++){
+   		 for(int j = 0; j < maxY; j++){
    	     	 printf("%c", &fileArray[i][j]);
    	      }
    	  }
 	printf("\n");
-    fclose(fp);
 }
 
 
