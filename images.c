@@ -12,7 +12,7 @@
 
 //Prototypes
 
-void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp);
+void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp,int *row_count);
 void printFile(char fileArray[maxX][maxY], int rows, int columns, FILE* fp);
 void rowColumnCount(char fileArray[maxX][maxY], int rows, int columns);
 int getMenuChoice();
@@ -25,7 +25,7 @@ void saveImage(FILE *fp);
 int main(){
 
     FILE* fp;
-    int menuChoice, editChoice, row, column;
+    int menuChoice, editChoice, row, column, rowResult;
 
     char fileArray[maxX][maxY];
     char fileName[maxY];
@@ -42,7 +42,7 @@ int main(){
    			 //Read file name
    			 break;
    		 case 2:
-   			 loadFile(fileArray, fileName, fp);
+   			 loadFile(fileArray, fileName, fp, &rowResult);
    			 break;
    		 case 3:
    			 editChoice = getEditChoice();
@@ -121,7 +121,7 @@ void saveImage(FILE *fp){
    	 }
    	 fp = fopen(fileName, "w");
    	 if (fp == NULL){
-   		 printf("Can't open file\n");
+   		 printf("Can't open file \n");
    	 }
    	 else{
    		 //fgets(fileName, , fp);
@@ -213,7 +213,7 @@ void cropImage( int numbers, int size, int array[]){
 
 //Current Work
 
-void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp){
+void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp, int *row_count){
     
     int row = 0;
     int column = 0;
@@ -259,6 +259,8 @@ void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp){
 	printf("\n");
    	printf("Rows: %d \n", row);
    	printf("Columns: %d", column);
+
+	*row_count = row;
 
    	 for(int i = 0; i < row; i++){
    		 for(int j = 0; j < maxY; j++){
