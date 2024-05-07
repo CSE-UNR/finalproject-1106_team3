@@ -216,50 +216,54 @@ void cropImage( int numbers, int size, int array[]){
 void loadFile(char fileArray[maxX][maxY], char fileName[maxY], FILE* fp){
     
     int row = 0;
-    int max_c, column = 0;
+    int column = 0;
     
     fp = fopen("test_image.txt", "r");
    	 if(fp == NULL){
    		 printf("Image could not be opened. \n");
-   	 }
- 
-   	 int i = 0;
-   	 while(fscanf(fp, "%c", &fileArray[row, column]) == 1){
-   		 if(fileArray[row, column] == "\0"){
-   						 row++;
-   						 max_c = column;
-   						 column=0;
-   		 }else{
-   			 column++;
-}
-   			 printf("columns: %s ", column);
-   	 }
-   	 printf("Rows: %d", row);
-   	 printf("COlumns: %d", max_c);
+   	}
+
+	int i = 0;
+	int j = 0;
+	while(fgets(fileArray[i], maxX, fp) != NULL){
+		printf("%s", fileArray[i]);
+		i++;
+		row++;
+	// while(fgets(fileArray[j], maxY, fp) != "\n"){
+	// 	j++;
+	// 	column++;
+	// }
+   		switch(fileArray[i][j]){
+   	     	case '1':
+   	     		fileArray[i][j] = '.';
+   	     		break;
+   	     	case '2':
+   	     		fileArray[i][j] = 'o';
+   	     		break;
+   	     	case '3':
+   	     		fileArray[i][j] = 'O';
+   				break;
+   			case '4':
+   				fileArray[i][j] = '0';
+   	     		break;
+   			default:
+   	     		fileArray[i][j] = ' ';
+   	     		break;
+   		}  
+	}
+		if(fileArray[i] == "1"){
+			fileArray[i] == ".";
+		}   		 	 
+	printf("\n");
+   	printf("Rows: %d \n", row);
+   	printf("Columns: %d", column);
+
    	 for(int i = 0; i < row; i++){
-
    		 for(int j = 0; j < column; j++){
-   	     	 fscanf(fp, "%c", &fileArray[i][j]);
-   	     		 switch(fileArray[i][j]){
-   	     		 case '1':
-   	     			 fileArray[i][j] == '.';
-   	     			 break;
-   	     		 case '2':
-   	     			 fileArray[i][j] == 'o';
-   	     			 break;
-   	     		 case '3':
-   	     			 fileArray[i][j] == 'O';
-   				 break;
-   				 case '4':
-   					 fileArray[i][j] == '0';
-   	     			 break;
-   			 default:
-   	     			 fileArray[i][j] == ' ';
-   	     			 break;
-   				 }
+   	     	 printf("%c", &fileArray[i][j]);
    	      }
-
    	  }
+	printf("\n");
     fclose(fp);
 }
 
