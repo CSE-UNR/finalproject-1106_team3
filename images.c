@@ -81,7 +81,7 @@ int getMenuChoice(){
     printf("1: Load image\n");
     printf("2: Display image\n");
     printf("3: Edit image\n");
-    printf("0: Return to main menu\n");
+    printf("0: Exit\n");
     printf("\n");
     printf("Choose from one of the options above: ");
     scanf("%d", &userMenu);
@@ -96,7 +96,7 @@ int getEditChoice(){
     printf("1: Crop image\n");
     printf("2: Dim image\n");
     printf("3: Brighten image\n");
-    printf("0: Exit\n");
+    printf("0: Return to main menu\n");
     printf("\n");
     printf("Choose from one of the options above: ");
     scanf("%d", &userEdit);
