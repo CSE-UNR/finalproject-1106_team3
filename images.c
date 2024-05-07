@@ -80,8 +80,21 @@ int main(){
 	return 0;
 }
 
-void cropImage( int numbers, int size, int array[]);{
-	
+void cropImage( int numbers, int size, int array[]){
+    int tempCount = 0;
+    printf("The image you want to crop is # x #\n");
+    printf("The row and column values start in the upper lefthand corner.\n");
+    printf("Which column do you want to be the new left side? ");
+    while(tempCount < size){
+    scanf("%d", array[tempCount]);
+    if(array[tempCount] <= 0 && array[tempCount] >= 50){
+    tempCount++;
+    }
+    else{
+    printf("Invalid column value. Chose a value between 1 and 50: ");
+    scanf("%d", &array[tempCount]);
+    }
+    }
 }
 
 void printImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
