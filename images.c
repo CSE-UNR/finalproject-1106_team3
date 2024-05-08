@@ -23,10 +23,9 @@ int loadFile(char image[MAX_NUM_LINES][MAX_LINE_LENGTH]);
 void printImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
 void convertImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
 void dimImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
-
 int getMenuChoice();
 int getEditChoice();
-void cropImage( int numbers, int size, int array[]);
+void cropImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
 void brightenImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
 void saveImage(FILE *fp);
 
@@ -55,15 +54,19 @@ int main(){
 
 				switch(editChoice){
 					case 1:
-						//cropImage( int numbers, int size, int array[]);
+						cropImage( image, numLines, lineLength);
+						printImage(image, numLines, lineLength); 
+						//saveImage();
 						break;
 					case 2:
 						dimImage(image, numLines, lineLength); 
-						printImage(image, numLines, lineLength); 
+						printImage(image, numLines, lineLength);
+						//saevImage(); 
 						break;
 					case 3:
 						brightenImage(image, numLines, lineLength);
 						printImage(image, numLines, lineLength);
+						//saveImage();
 						break;
 					case 0:
 						//exit
@@ -80,21 +83,23 @@ int main(){
 	return 0;
 }
 
-void cropImage( int numbers, int size, int array[]){
-    int tempCount = 0;
+void cropImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
+    int tempCount = 0, size =0;
     printf("The image you want to crop is # x #\n");
     printf("The row and column values start in the upper lefthand corner.\n");
     printf("Which column do you want to be the new left side? ");
     while(tempCount < size){
-    scanf("%d", array[tempCount]);
-    if(array[tempCount] <= 0 && array[tempCount] >= 50){
-    tempCount++;
+    scanf("%d", image[tempCount]);
+    	if(image[tempCount] <= 0 && image[tempCount] >= 50){
+    		tempCount++;
+   	 } else{
+   		printf("Invalid column value. Choose again: ");
+    		scanf("%d", &image[tempCount]);
+   	 }
     }
-    else{
-    printf("Invalid column value. Chose a value between 1 and 50: ");
-    scanf("%d", &array[tempCount]);
-    }
-    }
+    printf("Which column do you want to be the new right side? ");
+    printf("Which row do you want to be the new top? ");
+    printf("Which row do you want to be the new bottom? "); 
 }
 
 void printImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
