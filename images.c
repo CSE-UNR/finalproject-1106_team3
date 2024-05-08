@@ -10,12 +10,7 @@
 #define MAX_NUM_LINES 500
 #define MAX_LINE_LENGTH 500
 #define MAX_FILE_NAME_LENGTH 500
-
-#define maxY 50 //500
-#define maxX 50  //500
-//I think we should change this name
-//Hard to differentiate from an actual string, same as string data type, like our file name dec.
-#define STRING 50
+#define NAME 50
 
 //Prototypes
 int strLen(char str[MAX_LINE_LENGTH]);
@@ -23,20 +18,21 @@ int loadFile(char image[MAX_NUM_LINES][MAX_LINE_LENGTH]);
 void printImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
 void convertImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
 void dimImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
+
 int getMenuChoice();
 int getEditChoice();
-void cropImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
+void cropImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int* numLines, int* lineLength);
 void brightenImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength);
-void saveImage(FILE *fp);
+void saveImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH],int numLines, int lineLength);
 
 int main(){
-	int menuChoice, editChoice, row, column, rowResult;
-
+	int menuChoice, editChoice, rows, columns, rowResult;
 	char image[MAX_NUM_LINES][MAX_LINE_LENGTH];
-
+	char fileName[NAME];
 	int numLines;
 	int lineLength;
 
+	
 	do{
 		menuChoice = getMenuChoice();
 
@@ -44,37 +40,43 @@ int main(){
 			case 1:
 				numLines = loadFile(image);
 				lineLength = strLen(image[0]);
+                convertImage(image, numLines, lineLength);
 				break;
 			case 2:
-				convertImage(image, numLines, lineLength);
-				printImage(image, numLines, lineLength);
+                if(numLines != 0){
+                    printImage(image, numLines, lineLength);
+                }else{
+                    printf("Sorry, there is no image to display. \n");
+                }
 				break;
 			case 3:
-				editChoice = getEditChoice();
-
-				switch(editChoice){
-					case 1:
-						cropImage( image, numLines, lineLength);
-						printImage(image, numLines, lineLength); 
-						//saveImage();
-						break;
-					case 2:
-						dimImage(image, numLines, lineLength); 
-						printImage(image, numLines, lineLength);
-						//saevImage(); 
-						break;
-					case 3:
-						brightenImage(image, numLines, lineLength);
-						printImage(image, numLines, lineLength);
-						//saveImage();
-						break;
-					case 0:
-						//exit
-						break;
-				}
+                if(numLines != 0){
+                    editChoice = getEditChoice();
+                    switch(editChoice){
+                        case 1:
+                            cropImage(image, &numLines, &lineLength);
+                            break;
+                        case 2:
+                            dimImage(image, numLines, lineLength); 
+                            printImage(image, numLines, lineLength); 
+                            saveImage(image, numLines, lineLength);
+                            break;
+                        case 3:
+                            brightenImage(image, numLines, lineLength);
+                            printImage(image, numLines, lineLength);
+                            saveImage(image,numLines, lineLength);
+                            break;
+                        case 0:
+                            //exit
+                            break;
+                        default:
+                            printf("Invalid option, please try again. \n");
+                            break;
+                    }
+                }else{
+                    printf("Sorry, no image to edit. \n");
+                }
 		}
-
-		
 	} while(menuChoice != 0);
 
 	printf("Goodbye!");
@@ -83,61 +85,58 @@ int main(){
 	return 0;
 }
 
-void cropImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
+void cropImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int* numLines, int* lineLength){
     int columnLeft = 0, columnRight = 0, rowTop= 0, rowBottom = 0;
-    printf("The image you want to crop is %d x %d\n", numLines, lineLength);
-    printf("The row and column values start in the upper lefthand corner.\n");
+    printImage(image, *numLines, *lineLength);
+
+    printf("The image you want to crop is %d x %d. \n", *numLines, *lineLength);
+
+    printf("The row and column values start in the upper lefthand corner.\n\n");
+
     printf("Which column do you want to be the new left side? ");
-    while(columnLeft < lineLength){
-    scanf("%d", image[columnLeft]);
-    	if(image[][columnLeft] >= 1 && image[][columnLeft] <= lineLength){
-    		columnLeft++;
-   	 } else{
-   		printf("Invalid column value. Choose again: ");
-    		scanf("%d", &image[][columnLeft]);
-   	 }
+
+    scanf("%d", &columnLeft);
+
+    while(columnLeft < 0 || columnLeft > *lineLength){
+        printf("Invalid column left value. Choose again: ");
+        scanf("%d", &columnLeft);
     }
-    
-    printf("Which column do you want to be the new right side? ");
-    while(columnRight < image[][columnLeft]){
-    	scanf("%d", image[][columnRight]);
-    		if(image[][columnRight] <= 1 && image[][columnRight] <= image[][columnLeft]){
-    			columnRight++;
-   	 } else{
-   		printf("Invalid column value. Choose again: ");
-    		scanf("%d", &image[][columnRight]);
-   	 }
+
+    printf("\nWhich column do you want to be the new right side? ");
+
+    scanf("%d", &columnRight);
+
+    while(columnRight <= columnLeft || columnRight > *lineLength){
+        printf("Invalid column right value. Choose again: ");
+        scanf("%d", &columnRight);
     }
-    
-    printf("Which row do you want to be the new top? ");
-    while(rowTop < numLines){
-    	scanf("%d", image[rowTop][]);
-    		if(image[rowTop][] >= 1 && image[rowTop][] <= numLines){
-    			rowTop++;
-   	 } else{
-   		printf("Invalid row value. Choose again: ");
-    		scanf("%d", &image[rowTop][]);
-   	 }
+
+    printf("\nWhich row do you want to be the new top? ");
+
+    scanf("%d", &rowTop);
+
+    while(rowTop < 0 || rowTop > *numLines){
+        printf("Invalid row top value. Choose again: ");
+        scanf("%d", &rowTop);
     }
-    
-    printf("Which row do you want to be the new bottom? ");
-    while(rowBottom < image[rowTop][]){
-    	scanf("%d", image[rowBottom][]);
-    		if(image[rowBottom][] >= 1 && image[rowBottom][] <= image[rowTop][]){
-    			rowBottom++;
-   	 } else{
-   		printf("Invalid row value. Choose again: ");
-    		scanf("%d", &image[rowBottom][]);
-   	 }
+
+    printf("\nWhich row do you want to be the new bottom? ");
+
+    scanf("%d", &rowBottom);
+
+    while(rowBottom <= rowTop || rowBottom > *numLines){
+        printf("Invalid row bottom value. Choose again: ");
+        scanf("%d", &rowBottom);
     }
-    for(int i = 0; i < size; i++){
-    	for(int j = 0; j < size; j++){
-    		printf("%c", image[rowBottom][]);
-    		
-    	
-    	}
-    }
+
+    *numLines = rowBottom - rowTop;
+    *lineLength = columnRight - columnLeft;
+
+    printImage(image, *numLines, *lineLength);
+    saveImage(image, *numLines, *lineLength);
 }
+
+
 
 void printImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
 	printf("\n");
@@ -239,26 +238,26 @@ int loadFile(char image[MAX_NUM_LINES][MAX_LINE_LENGTH]){
     fp = fopen(fileName, "r");
 
    	if(fp == NULL){
-   		 printf("Could not find an image with that file name. \n");
+        printf("Could not find an image with that file name. \n");
 		return -1;
    	}
 
 	int i = 0;
 
 	while(fgets(image[i], MAX_LINE_LENGTH, fp) != NULL){
-		//printf("%s", image[i]);//TODO: Delete
 		i++;
 	}
 
 	fclose(fp);
 
-	printf("Image successfully loaded!\n");
+	printf("Image successfully loaded! \n");
 
 	return i;
 }
 
 void cpyStr(char source[], char destination[]){
-	int i=0;
+	int i = 0;
+
 	while(source[i] != '\0'){
 		destination[i] = source[i];
 		i++;
@@ -275,9 +274,9 @@ int strLen(char str[]){
 		i++;
 	}
 
-	if(str[i] == '\n'){
-		i--;
-	}
+    // if(str[i] = '\n'){
+    //     i--;
+    // }
 
 	return i;
 }
@@ -308,32 +307,35 @@ int getEditChoice(){
     return userEdit;
 }
 
-void saveImage(FILE *fp){
-    char fileName[maxX+1], saveChoice;
+void saveImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
+    char saveChoice;
+    char fileName[MAX_LINE_LENGTH];
+        
     printf("Would you like to save image? (y/n): ");
     scanf(" %c",&saveChoice);
+
     if(saveChoice == 'y' || saveChoice == 'Y'){
-   	 printf("What do you want to name the image file? (inlcude the extension): ");
-   	 scanf("%s", fileName);
-   	 //fgets(fileName, STRING, stdin);
-   	 for (int i = 0; fileName[i] != '\0'; i++){
-   		 if(fileName[i] == '\n'){
-   			 fileName[i] = '\0';
-   		 }
-   	 }
-   	 fp = fopen(fileName, "w");
-   	 if (fp == NULL){
-   		 printf("Can't open file \n");
-   	 }
-   	 else{
-   		 //fgets(fileName, , fp);
-    
-   		 //for(int ){
-   		 //}
-   		 //for(int ){
-   		 //}
-   	 
-   	 //fclose(fileName);
-   	 }
+
+        printf("What do you want to name the image file? (inlcude the extension): ");
+        scanf("%s", fileName);
+
+        FILE* fp;
+
+        fp = fopen(fileName, "w");
+
+        if(fp == NULL){
+            printf("Cannot open file. \n");
+        }
+
+	    for(int i=0; i< numLines; i++){
+            for(int j=0; j<lineLength; j++){
+                fprintf(fp, "%c", image[i][j]);
+            }
+		    fprintf(fp, "\n");
+	    }
+
+        printf("\n");
+
+        fclose(fp);
     }
 }
