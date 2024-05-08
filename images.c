@@ -84,22 +84,59 @@ int main(){
 }
 
 void cropImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
-    int tempCount = 0, size =0;
-    printf("The image you want to crop is # x #\n");
+    int columnLeft = 0, columnRight = 0, rowTop= 0, rowBottom = 0;
+    printf("The image you want to crop is %d x %d\n", numLines, lineLength);
     printf("The row and column values start in the upper lefthand corner.\n");
     printf("Which column do you want to be the new left side? ");
-    while(tempCount < size){
-    scanf("%d", image[tempCount]);
-    	if(image[tempCount] <= 0 && image[tempCount] >= 50){
-    		tempCount++;
+    while(columnLeft < lineLength){
+    scanf("%d", image[columnLeft]);
+    	if(image[][columnLeft] >= 1 && image[][columnLeft] <= lineLength){
+    		columnLeft++;
    	 } else{
    		printf("Invalid column value. Choose again: ");
-    		scanf("%d", &image[tempCount]);
+    		scanf("%d", &image[][columnLeft]);
    	 }
     }
+    
     printf("Which column do you want to be the new right side? ");
+    while(columnRight < image[][columnLeft]){
+    	scanf("%d", image[][columnRight]);
+    		if(image[][columnRight] <= 1 && image[][columnRight] <= image[][columnLeft]){
+    			columnRight++;
+   	 } else{
+   		printf("Invalid column value. Choose again: ");
+    		scanf("%d", &image[][columnRight]);
+   	 }
+    }
+    
     printf("Which row do you want to be the new top? ");
-    printf("Which row do you want to be the new bottom? "); 
+    while(rowTop < numLines){
+    	scanf("%d", image[rowTop][]);
+    		if(image[rowTop][] >= 1 && image[rowTop][] <= numLines){
+    			rowTop++;
+   	 } else{
+   		printf("Invalid row value. Choose again: ");
+    		scanf("%d", &image[rowTop][]);
+   	 }
+    }
+    
+    printf("Which row do you want to be the new bottom? ");
+    while(rowBottom < image[rowTop][]){
+    	scanf("%d", image[rowBottom][]);
+    		if(image[rowBottom][] >= 1 && image[rowBottom][] <= image[rowTop][]){
+    			rowBottom++;
+   	 } else{
+   		printf("Invalid row value. Choose again: ");
+    		scanf("%d", &image[rowBottom][]);
+   	 }
+    }
+    for(int i = 0; i < size; i++){
+    	for(int j = 0; j < size; j++){
+    		printf("%c", image[rowBottom][]);
+    		
+    	
+    	}
+    }
 }
 
 void printImage(char image[MAX_NUM_LINES][MAX_LINE_LENGTH], int numLines, int lineLength){
